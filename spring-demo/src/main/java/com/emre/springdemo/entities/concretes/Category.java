@@ -26,17 +26,16 @@ import lombok.NoArgsConstructor;
 //ilişkilerde sonsuza kadar birbirinin içine girmesin bizim söylediğimiz kadarını map etsin diye
 
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","products"})
-
 public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CategoryID")
 	private int id;
-	
+
 	@Column(name = "CategoryName")
 	private String categoryName;
-	
+
 	@OneToMany(mappedBy = "category")
 	private List<Product> products;
-	
+
 }

@@ -9,12 +9,14 @@ import com.emre.springdemo.entities.dtos.ProductWithCategoryDto;
 
 public interface ProductService {
 	DataResult<List<Product>> getAll();
-	
+
 	DataResult<List<Product>> getAllSorted(boolean directionParam, String... properties);
-	
+
 	DataResult<List<Product>> getAllPaginated(int pageNo, int pageSize); //pagination işlemi için
 
 	Result add(Product product);
+
+	Result update(Product product);
 
 	DataResult<Product> getByProductName(String productName);
 
@@ -29,7 +31,9 @@ public interface ProductService {
 	DataResult<List<Product>> getByProductNameStartsWith(String productName);
 
 	DataResult<List<Product>> getByProductNameAndCategoryIdCustom(String productName, int categoryId);
-	
+
 	DataResult<List<ProductWithCategoryDto>> getProductWithCategoryDetails();
+	
+	Result transactionalAddTest(Product product);
 
 }

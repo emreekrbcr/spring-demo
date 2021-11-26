@@ -3,8 +3,10 @@ package com.emre.springdemo.controller.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,15 +18,12 @@ import com.emre.springdemo.entities.concretes.Product;
 import com.emre.springdemo.entities.dtos.ProductWithCategoryDto;
 import com.emre.springdemo.service.abstracts.ProductService;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/controller/products")
 public class ProductsController {
 
 	@Autowired
-	private final ProductService productService;
+	private ProductService productService;
 
 	@GetMapping("/getAll")
 	public DataResult<List<Product>> getAll() {
@@ -46,6 +45,11 @@ public class ProductsController {
 		return this.productService.add(product);
 	}
 
+	@PutMapping("/update")
+	public Result update(@RequestBody Product product) {
+		return this.productService.update(product);
+	}
+
 	@GetMapping("/getByProductName")
 	public DataResult<Product> getByProductName(@RequestParam String productName) {
 		return this.productService.getByProductName(productName);
@@ -61,10 +65,15 @@ public class ProductsController {
 	public DataResult<List<Product>> getByCategoryIdIn(@RequestParam List<Integer> categories) {
 		return this.productService.getByCategoryIdIn(categories);
 	}
-	
+
 	@GetMapping("/getProductWithCategoryDetails")
-	public DataResult<List<ProductWithCategoryDto>> getProductWithCategoryDetails(){
+	public DataResult<List<ProductWithCategoryDto>> getProductWithCategoryDetails() {
 		return this.productService.getProductWithCategoryDetails();
+	}
+
+	@PostMapping("/transactionalAddTest")
+	public ResponseEntity<?> transactionalAddTest(@RequestBody Product product) {
+		return ResponseEntity.ok(this.productService.transactionalAddTest(product));
 	}
 
 }
