@@ -1,4 +1,4 @@
-package com.emre.springdemo.core.utilities.results;
+package com.emre.springdemo.core.utilities.results.service;
 
 public class SuccessResult extends Result{
 
@@ -6,7 +6,7 @@ public class SuccessResult extends Result{
 		super(true);
 	}
 
-	public SuccessResult(String ...messages) {
+	public SuccessResult(String... messages) {
 		super(true,messages);
 	}
 

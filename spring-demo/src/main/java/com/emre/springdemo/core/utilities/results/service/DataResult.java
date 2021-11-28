@@ -1,4 +1,4 @@
-package com.emre.springdemo.core.utilities.results;
+package com.emre.springdemo.core.utilities.results.service;
 
 public abstract class DataResult<T> extends Result {
 
@@ -9,7 +9,7 @@ public abstract class DataResult<T> extends Result {
 		this.data = data;
 	}
 
-	public DataResult(T data, boolean success, String ...messages) {
+	public DataResult(T data, boolean success, String... messages) {
 		super(success, messages);
 		this.data = data;
 	}

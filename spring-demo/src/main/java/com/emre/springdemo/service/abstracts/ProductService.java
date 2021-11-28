@@ -2,8 +2,8 @@ package com.emre.springdemo.service.abstracts;
 
 import java.util.List;
 
-import com.emre.springdemo.core.utilities.results.DataResult;
-import com.emre.springdemo.core.utilities.results.Result;
+import com.emre.springdemo.core.utilities.results.service.DataResult;
+import com.emre.springdemo.core.utilities.results.service.Result;
 import com.emre.springdemo.entities.concretes.Product;
 import com.emre.springdemo.entities.dtos.ProductWithCategoryDto;
 

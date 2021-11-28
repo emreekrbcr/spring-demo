@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.emre.springdemo.core.utilities.results.DataResult;
-import com.emre.springdemo.core.utilities.results.Result;
+import com.emre.springdemo.core.utilities.controller.ControllerHelper;
+import com.emre.springdemo.core.utilities.results.service.DataResult;
+import com.emre.springdemo.core.utilities.results.service.Result;
 import com.emre.springdemo.entities.concretes.Product;
-import com.emre.springdemo.entities.dtos.ProductWithCategoryDto;
 import com.emre.springdemo.service.abstracts.ProductService;
 
 @RestController
@@ -26,54 +26,69 @@ public class ProductsController {
 	private ProductService productService;
 
 	@GetMapping("/getAll")
-	public DataResult<List<Product>> getAll() {
-		return this.productService.getAll();
+	public ResponseEntity<?> getAll() {
+		DataResult<List<Product>> dataResult = productService.getAll();
+		return ControllerHelper.returnCommonResponseModel(dataResult);
 	}
 
 	@GetMapping("/getAllBySorted")
-	public DataResult<List<Product>> getAllSorted(@RequestParam boolean directionParam, String... properties) {
-		return this.productService.getAllSorted(directionParam, properties);
+	public ResponseEntity<?> getAllSorted(@RequestParam boolean directionParam, String... properties) {
+		DataResult<List<Product>> dataResult = productService.getAllSorted(directionParam, properties);
+		return ControllerHelper.returnCommonResponseModel(dataResult);
 	}
 
 	@GetMapping("/getAllByPaginated")
-	public DataResult<List<Product>> getAllPaginated(@RequestParam int pageNo, @RequestParam int pageSize) {
-		return this.productService.getAllPaginated(pageNo, pageSize);
+	public ResponseEntity<?> getAllPaginated(@RequestParam int pageNo, @RequestParam int pageSize) {
+		DataResult<List<Product>> dataResult = productService.getAllPaginated(pageNo, pageSize);
+		return ControllerHelper.returnCommonResponseModel(dataResult);
 	}
 
 	@PostMapping("/add")
-	public Result add(@RequestBody Product product) {
-		return this.productService.add(product);
+	public ResponseEntity<?> add(@RequestBody Product product) {
+		Result result = productService.add(product);
+		return ControllerHelper.returnCommonResponseModel(result);
 	}
 
 	@PutMapping("/update")
-	public Result update(@RequestBody Product product) {
-		return this.productService.update(product);
+	public ResponseEntity<?> update(@RequestBody Product product) {
+		Result result = productService.update(product);
+		return ControllerHelper.returnCommonResponseModel(result);
 	}
 
 	@GetMapping("/getByProductName")
-	public DataResult<Product> getByProductName(@RequestParam String productName) {
-		return this.productService.getByProductName(productName);
+	public ResponseEntity<?> getByProductName(@RequestParam String productName) {
+		// var kullanarak yazmak daha pratik ama kod derlenirken ekstra ufak bir maliyet
+		// gerektiyor
+		// hızlanmak adına bu tarz kodları yazarken kullanılabilir ama suistimal
+		// edilmemeli
+
+		var dataResult = productService.getByProductName(productName);
+		return ControllerHelper.returnCommonResponseModel(dataResult);
 	}
 
 	@GetMapping("/getByProductNameAndCategoryId")
-	public DataResult<Product> getByProductNameAndCategoryId(@RequestParam String productName,
+	public ResponseEntity<?> getByProductNameAndCategoryId(@RequestParam String productName,
 			@RequestParam int categoryId) {
-		return this.productService.getByProductNameAndCategoryId(productName, categoryId);
+		var dataResult = productService.getByProductNameAndCategoryId(productName, categoryId);
+		return ControllerHelper.returnCommonResponseModel(dataResult);
 	}
 
 	@GetMapping("/getByCategoryIdIn")
-	public DataResult<List<Product>> getByCategoryIdIn(@RequestParam List<Integer> categories) {
-		return this.productService.getByCategoryIdIn(categories);
+	public ResponseEntity<?> getByCategoryIdIn(@RequestParam List<Integer> categories) {
+		var dataResult = productService.getByCategoryIdIn(categories);
+		return ControllerHelper.returnCommonResponseModel(dataResult);
 	}
 
 	@GetMapping("/getProductWithCategoryDetails")
-	public DataResult<List<ProductWithCategoryDto>> getProductWithCategoryDetails() {
-		return this.productService.getProductWithCategoryDetails();
+	public ResponseEntity<?> getProductWithCategoryDetails() {
+		var dataResult = productService.getProductWithCategoryDetails();
+		return ControllerHelper.returnCommonResponseModel(dataResult);
 	}
 
 	@PostMapping("/transactionalAddTest")
 	public ResponseEntity<?> transactionalAddTest(@RequestBody Product product) {
-		return ResponseEntity.ok(this.productService.transactionalAddTest(product));
+		var result = productService.transactionalAddTest(product);
+		return ControllerHelper.returnCommonResponseModel(result);
 	}
 
 }
